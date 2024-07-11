@@ -1,9 +1,12 @@
 plugins {
-    kotlin("jvm") version "2.0.0"
+    alias(libs.plugins.kotlin)
 }
 
-group = "io.lwcl"
-version = "1.0-SNAPSHOT"
+group = providers.gradleProperty("group").get()
+version = providers.gradleProperty("proyect_version").get()
+description = providers.gradleProperty("proyect_description").get()
+
+val javaVersion: Int = providers.gradleProperty("java_version").get().toInt()
 
 repositories {
     mavenCentral()
@@ -11,9 +14,14 @@ repositories {
 
 dependencies {
     testImplementation(kotlin("test"))
-    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.17.2")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.17.2")
-    implementation("io.klogging:klogging-jvm:0.5.14")
+    implementation(libs.jackson.dataformat.yml)
+    implementation(libs.jackson.module.kotlin)
+    implementation(libs.klogging)
+}
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = javaVersion.toString()
+    targetCompatibility = javaVersion.toString()
 }
 
 tasks.test {
