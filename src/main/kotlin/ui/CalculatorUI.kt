@@ -1,8 +1,8 @@
 package io.lwcl.ui
 
 import io.klogging.NoCoLogging
-import io.lwcl.enums.ButtonType
 import io.lwcl.enums.ThemeFormat
+import io.lwcl.enums.buttons.UtilityButton
 import io.lwcl.theme.ThemeLoader
 import io.lwcl.theme.properties.Theme
 import io.lwcl.utils.ColorUtil.hexToColor
@@ -14,21 +14,44 @@ import javax.swing.*
 
 class CalculatorUI : NoCoLogging {
     companion object {
-        private const val FONT_NAME = "Segoe"
-        private const val APPLICATION_TITLE = "Calculator"
-        private const val WINDOW_WIDTH = 410
-        private const val WINDOW_HEIGHT = 600
-        private const val BUTTON_WIDTH = 80
-        private const val BUTTON_HEIGHT = 70
-        private const val MARGIN_X = 20
-        private const val MARGIN_Y = 60
+        fun createButton(value: String, visibility: Boolean = true): JButton {
+            val button = JButton(value)
+            button.setLocation(0, 0)
+            button.setSize(BUTTON_WIDTH, BUTTON_HEIGHT)
+            button.font = Font(FONT_NAME, Font.PLAIN, FONT_SIZE)
+            button.cursor = Cursor(Cursor.HAND_CURSOR)
+            button.isFocusable = false
+            button.isVisible = visibility
+            window.add(button)
+
+            return button
+        }
+
+        const val APPLICATION_TITLE = "Calculator"
+
+        const val FONT_NAME = "Segoe"
+        const val FONT_SIZE = 24
+
+        const val WINDOW_WIDTH = 410
+        const val WINDOW_HEIGHT = 600
+
+        const val BUTTON_WIDTH = 80
+        const val BUTTON_HEIGHT = 70
+
+        const val MARGIN_Y = 60
+        const val MARGIN_X = 20
 
         val window = JFrame(APPLICATION_TITLE)
         lateinit var inputScreen: JTextField // Initialized later
+
+        var addToDisplay: Boolean = true
+        var typedValue: Double = 0.0
+        var selectedOperator: Char = ' '
+        var go: Boolean = false
     }
 
-    private val buttonUI = ButtonUI(BUTTON_WIDTH, BUTTON_HEIGHT, FONT_NAME)
     private val themesMap = ThemeLoader.loadThemes(ThemeFormat.YAML)
+    private val buttonUI = ButtonUI()
 
     private lateinit var comboTheme: JComboBox<String>
     private lateinit var comboCalculatorType: JComboBox<String>
@@ -41,7 +64,6 @@ class CalculatorUI : NoCoLogging {
         val rows = intArrayOf(MARGIN_Y, MARGIN_Y + 100, MARGIN_Y + 100 + 80, MARGIN_Y + 100 + 80 * 2, MARGIN_Y + 100 + 80 * 3, MARGIN_Y + 100 + 80 * 4)
 
         initInputScreen(columns, rows)
-        buttonUI.initButtons(columns, rows)
         initCalculatorTypeSelector()
         initThemeSelector()
 
@@ -83,15 +105,15 @@ class CalculatorUI : NoCoLogging {
             when (val selectedItem = it.item as String) {
                 "Standard" -> {
                     window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT)
-                    buttonUI.btnRoot.isVisible = false
-                    buttonUI.btnPower.isVisible = false
-                    buttonUI.btnLog.isVisible = false
+                    buttonUI.function.btnRoot.isVisible = false
+                    buttonUI.function.btnLog.isVisible = false
+                    buttonUI.operator.btnPower.isVisible = false
                 }
                 "Scientific" -> {
                     window.setSize(WINDOW_WIDTH + 80, WINDOW_HEIGHT)
-                    buttonUI.btnRoot.isVisible = true
-                    buttonUI.btnPower.isVisible = true
-                    buttonUI.btnLog.isVisible = true
+                    buttonUI.function.btnRoot.isVisible = true
+                    buttonUI.function.btnLog.isVisible = true
+                    buttonUI.operator.btnPower.isVisible = true
                 }
                 else -> logger.info("Unknown calculator type: $selectedItem")
             }
@@ -119,19 +141,39 @@ class CalculatorUI : NoCoLogging {
         comboTheme.foreground = hexToColor(theme.textColor)
         inputScreen.foreground = hexToColor(theme.textColor)
 
-        for (button in buttonUI.getAllButtons()) {
-            when (buttonUI.getButtonType(button)) {
-                ButtonType.NUMBER -> {
-                    button.foreground = hexToColor(theme.textColor)
-                    button.background = hexToColor(theme.numbersBackground)
+
+        for (button in buttonUI.numpad.buttons) {
+            button.foreground = hexToColor(theme.buttonType.numberTextColor)
+            button.background = hexToColor(theme.buttonType.numberBackground)
+        }
+
+        for (button in buttonUI.operator.buttons) {
+            button.foreground = hexToColor(theme.buttonType.operatorTextColor)
+            button.background = hexToColor(theme.buttonType.operatorBackground)
+        }
+
+        for (button in buttonUI.function.buttons) {
+            button.foreground = hexToColor(theme.buttonType.functionTextColor)
+            button.background = hexToColor(theme.buttonType.functionBackground)
+        }
+
+        for (entry in buttonUI.utility.buttons) {
+            when (entry.key) {
+                UtilityButton.BACKSPACE -> {
+                    entry.value.foreground = hexToColor(theme.button.backTextColor)
+                    entry.value.background = hexToColor(theme.button.backBackground)
                 }
-                ButtonType.OPERATOR -> {
-                    button.foreground = hexToColor(theme.textColor)
-                    button.background = hexToColor(theme.operatorBackground)
+                UtilityButton.CLEAR -> {
+                    entry.value.foreground = hexToColor(theme.button.clearTextColor)
+                    entry.value.background = hexToColor(theme.button.clearBackground)
                 }
-                ButtonType.EQUAL -> {
-                    button.foreground = hexToColor(theme.btnEqualTextColor)
-                    button.background = hexToColor(theme.btnEqualBackground)
+                UtilityButton.EQUALS -> {
+                    entry.value.foreground = hexToColor(theme.button.equalBackground)
+                    entry.value.background = hexToColor(theme.button.equalBackground)
+                }
+                else -> {
+                    entry.value.foreground = hexToColor(theme.buttonType.utilityTextColor)
+                    entry.value.background = hexToColor(theme.buttonType.utilityBackground)
                 }
             }
         }
