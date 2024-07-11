@@ -2,12 +2,26 @@
   "themes": [
     {
       "name": "Light",
-      "applicationBackground": "#f0f3f9",
       "textColor": "#000000",
-      "operatorBackground": "#f7f9fc",
-      "numbersBackground": "#ffffff",
-      "btnEqualTextColor": "#ffffff",
-      "btnEqualBackground": "#0067c0"
+      "applicationBackground": "#f0f3f9",
+      "button": {
+        "backTextColor": "#000000",
+        "backBackground": "#ffffff",
+        "clearTextColor": "#000000",
+        "clearBackground": "#ffffff",
+        "equalTextColor": "#ffffff",
+        "equalBackground": "#0067c0"
+      },
+      "buttonType": {
+        "functionTextColor": "#000000",
+        "functionBackground": "#f7f9fc",
+        "numberTextColor": "#000000",
+        "numberBackground": "#ffffff",
+        "operatorTextColor": "#000000",
+        "operatorBackground": "#f7f9fc",
+        "utilityTextColor": "#000000",
+        "utilityBackground": "#f7f9fc"
+      }
     },
     {
       "name": "Dark",
