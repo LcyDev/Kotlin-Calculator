@@ -1,6 +1,6 @@
-package io.lwcl.enums
+package io.lwcl.enums.buttons
 
-enum class Number(val value: String) {
+enum class NumberButton(val value: String) {
     ONE("1"),
     TWO("2"),
     THREE("3"),
@@ -10,5 +10,5 @@ enum class Number(val value: String) {
     SEVEN("7"),
     EIGHT("8"),
     NINE("9"),
-    ZERO("0")
+    ZERO("0");
 }
