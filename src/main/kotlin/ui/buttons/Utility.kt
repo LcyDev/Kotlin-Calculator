@@ -32,9 +32,6 @@ class Utility {
         return button
     }
 
-    private fun handleUtilButtonClick(util: UtilityButton) {
-
-    }
     private fun onBackButtonClick() {
         val currentText = CalculatorUI.inputScreen.text
         val newText = StringBuilder(currentText).deleteCharAt(currentText.length - 1).toString()
@@ -43,7 +40,7 @@ class Utility {
 
     private fun onClearButtonClick() {
         CalculatorUI.inputScreen.text = "0"
-        CalculatorUI.selectedOperator = ' '
+        CalculatorUI.selectedOperator = null
         CalculatorUI.typedValue = 0.0
     }
 
@@ -61,7 +58,7 @@ class Utility {
                 else -> CalculatorUI.typedValue
             }
             CalculatorUI.inputScreen.text = formattedValue.toString()
-            CalculatorUI.selectedOperator = '='
+            CalculatorUI.selectedOperator = null
             CalculatorUI.addToDisplay = false
         }
     }
