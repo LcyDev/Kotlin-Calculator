@@ -42,17 +42,18 @@ class Operator {
         }
 
         if (CalculatorUI.go) {
-            CalculatorUI.typedValue = performOperation(CalculatorUI.typedValue, currentText.toDouble(), CalculatorUI.selectedOperator)
+            CalculatorUI.typedValue =
+                performOperation(CalculatorUI.typedValue, currentText.toDouble(), CalculatorUI.selectedOperator)
             CalculatorUI.inputScreen.text = when {
-                OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
+                OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt()
+                    .toString()
+
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = '+'
             CalculatorUI.go = false
             CalculatorUI.addToDisplay = false
-        } else {
-            CalculatorUI.selectedOperator = '+'
         }
+        CalculatorUI.selectedOperator = OperatorButton.ADD
     }
 
     private fun onSubtractButtonClick() {
@@ -68,12 +69,10 @@ class Operator {
                 OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = '-'
             CalculatorUI.go = false
             CalculatorUI.addToDisplay = false
-        } else {
-            CalculatorUI.selectedOperator = '-'
         }
+        CalculatorUI.selectedOperator = OperatorButton.SUBTRACT
     }
 
     private fun onMultiplyButtonClick() {
@@ -84,17 +83,18 @@ class Operator {
         }
 
         if (CalculatorUI.go) {
-            CalculatorUI.typedValue = performOperation(CalculatorUI.typedValue, currentText.toDouble(), CalculatorUI.selectedOperator)
+            CalculatorUI.typedValue =
+                performOperation(CalculatorUI.typedValue, currentText.toDouble(), CalculatorUI.selectedOperator)
             CalculatorUI.inputScreen.text = when {
-                OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
+                OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt()
+                    .toString()
+
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = '*'
             CalculatorUI.go = false
             CalculatorUI.addToDisplay = false
-        } else {
-            CalculatorUI.selectedOperator = '*'
         }
+        CalculatorUI.selectedOperator = OperatorButton.MULTIPLY
     }
 
     private fun onDivideButtonClick() {
@@ -110,12 +110,10 @@ class Operator {
                 OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = '/'
             CalculatorUI.go = false
             CalculatorUI.addToDisplay = false
-        } else {
-            CalculatorUI.selectedOperator = '/'
         }
+        CalculatorUI.selectedOperator = OperatorButton.DIVIDE
     }
 
     private fun onModulusButtonClick() {
@@ -130,9 +128,9 @@ class Operator {
             OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
             else -> CalculatorUI.typedValue.toString()
         }
-        CalculatorUI.selectedOperator = '%'
         CalculatorUI.go = false
         CalculatorUI.addToDisplay = false
+        CalculatorUI.selectedOperator = OperatorButton.REMAINDER
     }
 
     private fun onPowerButtonClick() {
@@ -148,11 +146,9 @@ class Operator {
                 OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = '^'
             CalculatorUI.go = false
             CalculatorUI.addToDisplay = false
-        } else {
-            CalculatorUI.selectedOperator = '^'
         }
+        CalculatorUI.selectedOperator = OperatorButton.POWER
     }
 }
