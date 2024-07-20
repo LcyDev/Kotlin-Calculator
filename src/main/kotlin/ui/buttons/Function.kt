@@ -14,7 +14,7 @@ class Function {
 
     val buttons = listOf(btnRoot, btnLog)
 
-    fun createFuncButton(func: FunctionButton, visibility: Boolean = true): JButton {
+    private fun createFuncButton(func: FunctionButton, visibility: Boolean = true): JButton {
         val button = CalculatorUI.createButton(func.toString(), visibility)
 
         button.addActionListener {
@@ -40,7 +40,7 @@ class Function {
                 OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = '√'
+            CalculatorUI.selectedFunction = FunctionButton.ROOT
             CalculatorUI.addToDisplay = false
         }
     }
@@ -60,7 +60,7 @@ class Function {
                 OPT_DECIMAL_REGEX.matches(CalculatorUI.typedValue.toString()) -> CalculatorUI.typedValue.toInt().toString()
                 else -> CalculatorUI.typedValue.toString()
             }
-            CalculatorUI.selectedOperator = 'l'
+            CalculatorUI.selectedFunction = FunctionButton.LOG
             CalculatorUI.addToDisplay = false
         }
     }
