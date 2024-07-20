@@ -2,6 +2,8 @@ package io.lwcl.ui
 
 import io.klogging.NoCoLogging
 import io.lwcl.enums.ThemeFormat
+import io.lwcl.enums.buttons.FunctionButton
+import io.lwcl.enums.buttons.OperatorButton
 import io.lwcl.enums.buttons.UtilityButton
 import io.lwcl.theme.ThemeLoader
 import io.lwcl.theme.properties.Theme
@@ -28,25 +30,27 @@ class CalculatorUI : NoCoLogging {
         }
 
         const val APPLICATION_TITLE = "Calculator"
-
         const val FONT_NAME = "Segoe"
+
         const val FONT_SIZE = 24
-
         const val WINDOW_WIDTH = 410
+
         const val WINDOW_HEIGHT = 600
-
         const val BUTTON_WIDTH = 80
+
         const val BUTTON_HEIGHT = 70
-
         const val MARGIN_Y = 60
+
         const val MARGIN_X = 20
-
         val window = JFrame(APPLICATION_TITLE)
-        lateinit var inputScreen: JTextField // Initialized later
 
+        lateinit var inputScreen: JTextField // Initialized later
         var addToDisplay: Boolean = true
+
         var typedValue: Double = 0.0
-        var selectedOperator: Char = ' '
+        var selectedUtility: UtilityButton? = null
+        var selectedFunction: FunctionButton? = null
+        var selectedOperator: OperatorButton? = null
         var go: Boolean = false
     }
 
