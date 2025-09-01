@@ -5,8 +5,8 @@ shadow = "8.1.1"
 
 # Libraries
 klogging = "0.5.14"
-jackson-dataformat-yaml = "2.17.2"
-jackson-module-kotlin = "2.17.2"
+jackson-dataformat-yaml = "2.20.0"
+jackson-module-kotlin = "2.20.0"
 
 [libraries]
 klogging = { module = "io.klogging:klogging-jvm", version.ref = "klogging" }
