@@ -1,6 +1,6 @@
 [versions]
 # Plugins
-kotlin = "2.3.0"
+kotlin = "2.3.21"
 shadow = "8.1.1"
 
 # Libraries
