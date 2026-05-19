@@ -4,7 +4,7 @@ kotlin = "2.3.0"
 shadow = "8.1.1"
 
 # Libraries
-klogging = "0.11.7"
+klogging = "0.11.8"
 jackson-dataformat-yaml = "2.20.1"
 jackson-module-kotlin = "2.20.1"
 
